@@ -1,0 +1,107 @@
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+    background:#05070c;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:system-ui, sans-serif;
+    overflow:hidden;
+}
+
+.intro{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+    height:100%;
+}
+
+/* Trading lines canvas */
+#lines{
+    position:absolute;
+    top:0; left:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+}
+
+/* Particles */
+.particles{
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    z-index:0;
+}
+
+/* Logo */
+.logo{
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:100px;
+    font-weight:900;
+    letter-spacing:8px;
+    color:white;
+    opacity:0;
+    animation:logoFade 1s ease forwards 1.5s;
+    z-index:2;
+}
+
+.logo .left{margin-right:20px;}
+.logo .right{margin-left:20px;color:#6366f1;}
+
+/* Vertical stroke */
+.stroke{
+    display:inline-block;
+    width:6px;
+    height:0;
+    background:linear-gradient(180deg,#6366f1,#22d3ee);
+    box-shadow:0 0 6px #6366f1;
+    margin:0 10px;
+    animation:strokeGrow 1.2s ease forwards;
+    transform-origin: bottom center;
+}
+
+/* Stroke animation */
+@keyframes strokeGrow{
+    0%{height:0; opacity:0;}
+    100%{height:120px; opacity:1;}
+}
+
+/* Logo fade & subtle glow */
+@keyframes logoFade{
+    0%{opacity:0;transform:scale(1.2);}
+    50%{opacity:1;transform:scale(1.05); text-shadow:0 0 4px #ffffff80,0 0 8px #6366f1;}
+    100%{opacity:1;transform:scale(1); text-shadow:0 0 2px #ffffff90,0 0 4px #6366f1;}
+}
+
+/* Subtitle */
+.subtitle{
+    margin-top:20px;
+    font-size:20px;
+    color:#aaa;
+    letter-spacing:2px;
+    opacity:0;
+    animation:subtitleFade 1s ease forwards 2.5s;
+    z-index:2;
+}
+
+@keyframes subtitleFade{
+    0%{opacity:0;}
+    100%{opacity:1;}
+}
+
+/* Mobile */
+@media(max-width:600px){
+    .logo{font-size:60px;letter-spacing:4px;}
+    .logo .left{margin-right:10px;}
+    .logo .right{margin-left:10px;}
+    .stroke{height:80px;width:4px;margin:0 5px;}
+    .subtitle{font-size:14px;}
+}

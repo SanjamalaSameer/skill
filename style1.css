@@ -1,0 +1,235 @@
+/* ================= Guidance Card ================= */
+.guidance-card {
+    background: #fff;
+    padding: 20px 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin: 20px 0;
+}
+
+.guidance-card h3 {
+    color: #667eea;
+    margin-bottom: 10px;
+}
+
+.guidance-card p {
+    font-size: 16px;
+    color: #333;
+}
+/* ================= General Reset ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: #f5f7fa;
+    color: #333;
+}
+
+/* ================= Header ================= */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #667eea;
+    padding: 15px 30px;
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background 0.3s;
+}
+
+header nav ul li a:hover,
+header nav ul li a.active {
+    background: #5563d6;
+}
+
+/* ================= Main Container ================= */
+.dashboard-container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* ================= Sections ================= */
+.section {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.section.active {
+    display: block;
+}
+
+/* ================= Score Card ================= */
+.score-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    margin-top: 20px;
+}
+
+.score-card h3 {
+    margin-bottom: 10px;
+    color: #667eea;
+}
+
+.score-value {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.btn-score {
+    padding: 10px 20px;
+    border: none;
+    background: #667eea;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.btn-score:hover {
+    background: #5563d6;
+    transform: translateY(-2px);
+}
+
+/* ================= Modern Profile Card ================= */
+.modern-profile {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    background: linear-gradient(145deg, #667eea, #5a67d8);
+    color: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    margin-top: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.modern-profile:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+}
+
+.modern-profile .avatar {
+    position: relative;
+    text-align: center;
+}
+
+.modern-profile .avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    object-fit: cover;
+}
+
+/* Overlay Change Photo Button */
+.modern-profile .avatar .btn-avatar {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(50%);
+    padding: 5px 10px;
+    font-size: 12px;
+    border: none;
+    border-radius: 12px;
+    background: #fff;
+    color: #667eea;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+
+.modern-profile .avatar .btn-avatar:hover {
+    background: #5563d6;
+    color: #fff;
+}
+
+.modern-profile .profile-info p {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+.btn-edit {
+    padding: 8px 18px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #fff;
+    color: #667eea;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+
+.btn-edit:hover {
+    background: #5563d6;
+    color: #fff;
+}
+
+/* ================= Footer ================= */
+footer {
+    text-align: center;
+    margin: 50px 0 20px;
+    color: #777;
+}
+
+/* ================= Animations ================= */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+
+/* ================= Responsive ================= */
+@media (max-width: 768px) {
+    .modern-profile {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .modern-profile .avatar img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .modern-profile .profile-info p {
+        font-size: 16px;
+    }
+
+    .btn-edit, .modern-profile .avatar .btn-avatar {
+        padding: 6px 14px;
+        font-size: 11px;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+}

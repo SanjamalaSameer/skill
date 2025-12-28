@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SkillUp | Dashboard</title>
+    <link rel="stylesheet" href="style1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<script>
+    // Protect dashboard
+    let loggedInUser = localStorage.getItem("loggedInUser");
+    if (!loggedInUser) {
+        window.location.href = "index1.html";
+    }
+
+    let users = JSON.parse(localStorage.getItem("users")) || {};
+    let userEmail = users[loggedInUser] ? users[loggedInUser].email : "";
+</script>
+
+<!-- Header -->
+<header>
+    <div class="logo">SkillUp</div>
+    <nav>
+        <ul>
+            <li><a href="#" id="dashboardLink" class="active">Dashboard</a></li>
+            <li><a href="#" id="profileLink">Profile</a></li>
+            <li><a href="#" id="logoutBtn">Logout</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Main Container -->
+<main class="dashboard-container">
+
+    <!-- Dashboard Section -->
+    <section id="dashboardSection" class="section active">
+        <h2>Welcome, <span id="userGreeting"></span>!</h2>
+
+        <!-- Guidance Card -->
+        <div class="guidance-card">
+            <h3>Your Learning Path</h3>
+            <p id="guidanceMessage"></p>
+        </div>
+
+        <!-- Daily Score -->
+        <div class="score-card">
+            <h3>Your Score Today</h3>
+            <div class="score-value" id="dailyScore">0</div>
+            <button class="btn-score" onclick="addScore(10)">Complete Lesson (+10)</button>
+        </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section id="profileSection" class="section">
+        <h2>Profile</h2>
+        <div class="profile-card modern-profile">
+            <div class="avatar">
+                <img id="profileAvatar" src="https://img.icons8.com/color/96/000000/user.png" alt="Avatar">
+                <input type="file" id="avatarInput" accept="image/*" style="display:none" onchange="changeAvatar(event)">
+                <button class="btn-avatar" onclick="document.getElementById('avatarInput').click()">
+                    <i class="fas fa-camera"></i>
+                </button>
+            </div>
+            <div class="profile-info">
+                <p><strong>Full Name:</strong> <span id="profileName"></span></p>
+                <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+                <p><strong>Total Score:</strong> <span id="totalScore">0</span></p>
+                <button class="btn-edit" onclick="editProfile()">Edit Profile</button>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>&copy; 2025 SkillUp. All rights reserved.</p>
+</footer>
+
+<script>
+    // Display greeting
+    document.getElementById("userGreeting").innerText = loggedInUser;
+
+    // Profile info
+    document.getElementById("profileName").innerText = loggedInUser;
+    document.getElementById("profileEmail").innerText = userEmail;
+
+    // Load saved avatar
+    let savedAvatar = localStorage.getItem("avatar_" + loggedInUser);
+    if (savedAvatar) document.getElementById("profileAvatar").src = savedAvatar;
+
+    // Logout
+    document.getElementById("logoutBtn").addEventListener("click", function() {
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "index1.html";
+    });
+
+    // Section toggle
+    const dashboardLink = document.getElementById("dashboardLink");
+    const profileLink = document.getElementById("profileLink");
+    const dashboardSection = document.getElementById("dashboardSection");
+    const profileSection = document.getElementById("profileSection");
+
+    dashboardLink.addEventListener("click", function() {
+        dashboardSection.classList.add("active");
+        profileSection.classList.remove("active");
+        dashboardLink.classList.add("active");
+        profileLink.classList.remove("active");
+    });
+
+    profileLink.addEventListener("click", function() {
+        profileSection.classList.add("active");
+        dashboardSection.classList.remove("active");
+        profileLink.classList.add("active");
+        dashboardLink.classList.remove("active");
+    });
+
+    // Daily score system
+    function addScore(points) {
+        let scores = JSON.parse(localStorage.getItem("scores")) || {};
+        let today = new Date().toLocaleDateString();
+
+        if (!scores[loggedInUser]) scores[loggedInUser] = {};
+        if (!scores[loggedInUser][today]) scores[loggedInUser][today] = 0;
+
+        scores[loggedInUser][today] += points;
+        localStorage.setItem("scores", JSON.stringify(scores));
+
+        document.getElementById("dailyScore").innerText = scores[loggedInUser][today];
+        calculateTotalScore();
+        updateGuidance();
+    }
+
+    // Load today score
+    let scores = JSON.parse(localStorage.getItem("scores")) || {};
+    let today = new Date().toLocaleDateString();
+    let todayScore = (scores[loggedInUser] && scores[loggedInUser][today]) ? scores[loggedInUser][today] : 0;
+    document.getElementById("dailyScore").innerText = todayScore;
+
+    // Total score
+    function calculateTotalScore() {
+        let scores = JSON.parse(localStorage.getItem("scores")) || {};
+        let userScores = scores[loggedInUser] || {};
+        let total = 0;
+        for (let day in userScores) total += userScores[day];
+        document.getElementById("totalScore").innerText = total;
+    }
+    calculateTotalScore();
+
+    // Change avatar
+    function changeAvatar(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById("profileAvatar").src = e.target.result;
+                localStorage.setItem("avatar_" + loggedInUser, e.target.result);
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // Edit profile
+    function editProfile() {
+        let newName = prompt("Enter new full name:", loggedInUser);
+        let newEmail = prompt("Enter new email:", userEmail);
+
+        if (newName && newEmail) {
+            let users = JSON.parse(localStorage.getItem("users")) || {};
+            if (newName !== loggedInUser) {
+                users[newName] = users[loggedInUser];
+                delete users[loggedInUser];
+
+                let avatarData = localStorage.getItem("avatar_" + loggedInUser);
+                if (avatarData) {
+                    localStorage.setItem("avatar_" + newName, avatarData);
+                    localStorage.removeItem("avatar_" + loggedInUser);
+                }
+
+                localStorage.setItem("loggedInUser", newName);
+                loggedInUser = newName;
+            }
+            users[loggedInUser].email = newEmail;
+            localStorage.setItem("users", JSON.stringify(users));
+
+            document.getElementById("profileName").innerText = loggedInUser;
+            document.getElementById("profileEmail").innerText = newEmail;
+            alert("Profile updated successfully!");
+            updateGuidance();
+        }
+    }
+
+    // Guidance system based on total score
+    function updateGuidance() {
+        let total = parseInt(document.getElementById("totalScore").innerText);
+        let guidance = "";
+
+        if (total < 20) guidance = "We recommend starting with: Python Basics → HTML & CSS";
+        else if (total < 50) guidance = "Next step: JavaScript & Web Development";
+        else if (total < 100) guidance = "Next step: Data Science & AI Fundamentals";
+        else guidance = "Advanced: AI Projects & Machine Learning";
+
+        document.getElementById("guidanceMessage").innerText = guidance;
+    }
+    updateGuidance();
+</script>
+
+</body>
+</html>

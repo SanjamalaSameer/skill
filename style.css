@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea, #764ba2, #43cea2);
+    background-size: 300% 300%;
+    animation: gradientBG 8s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Background Animation */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    width: 380px;
+}
+
+.form-box {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    padding: 30px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    animation: slideUp 1s ease;
+}
+
+/* Card Animation */
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.title {
+    color: #fff;
+    font-size: 32px;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #e0e0e0;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+input:focus {
+    border: 2px solid #43cea2;
+}
+
+/* Button Style */
+.btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background: linear-gradient(45deg, #43cea2, #185a9d);
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
+.switch {
+    margin-top: 20px;
+    color: #fff;
+    font-size: 14px;
+}
+
+.switch span {
+    color: #ffd369;
+    cursor: pointer;
+    font-weight: bold;
+}
